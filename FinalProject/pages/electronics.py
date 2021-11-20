@@ -1,8 +1,11 @@
-import dash_core_components as dcc
-import dash_html_components as html
+import dash
+from dash import dcc, html
+import plotly.express as px
+from dash.dependencies import Input, Output, State
+import numpy as np
+import pandas as pd
 import plotly.graph_objs as go
 from utils import Header, make_dash_table
-import pandas as pd
 import pathlib
 
 # get relative data folder
@@ -16,7 +19,6 @@ df_avg_returns = pd.read_csv(DATA_PATH.joinpath("df_avg_returns.csv"))
 df_after_tax = pd.read_csv(DATA_PATH.joinpath("df_after_tax.csv"))
 df_recent_returns = pd.read_csv(DATA_PATH.joinpath("df_recent_returns.csv"))
 df_graph = pd.read_csv(DATA_PATH.joinpath("df_graph.csv"))
-
 
 def create_layout(app):
     return html.Div(

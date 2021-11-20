@@ -6,6 +6,7 @@ import pathlib
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../data").resolve()
+print(PATH)
 
 df_dividend = pd.read_csv(DATA_PATH.joinpath("df_dividend.csv"))
 df_realized = pd.read_csv(DATA_PATH.joinpath("df_realized.csv"))

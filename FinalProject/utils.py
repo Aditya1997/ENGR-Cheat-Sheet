@@ -1,6 +1,4 @@
-import dash_html_components as html
-import dash_core_components as dcc
-
+from dash import dcc, html
 
 def Header(app):
     return html.Div([get_header(app), html.Br([]), get_menu()])
@@ -11,39 +9,15 @@ def get_header(app):
         [
             html.Div(
                 [
-                    html.A(
-                        html.Img(
-                            src=app.get_asset_url("dash-financial-logo.png"),
-                            className="logo",
-                        ),
-                        href="https://plotly.com/dash",
-                    ),
-                    html.A(
-                        html.Button(
-                            "Enterprise Demo",
-                            id="learn-more-button",
-                            style={"margin-left": "-10px"},
-                        ),
-                        href="https://plotly.com/get-demo/",
-                    ),
-                    html.A(
-                        html.Button("Source Code", id="learn-more-button"),
-                        href="https://github.com/plotly/dash-sample-apps/tree/main/apps/dash-financial-report",
-                    ),
-                ],
-                className="row",
-            ),
-            html.Div(
-                [
                     html.Div(
-                        [html.H5("Calibre Financial Index Fund Investor Shares")],
+                        [html.H5("Engineering Calculators")],
                         className="seven columns main-title",
                     ),
                     html.Div(
                         [
                             dcc.Link(
                                 "Full View",
-                                href="/dash-financial-report/full-view",
+                                href="/FinalProject/full-view",
                                 className="full-view-link",
                             )
                         ],
@@ -51,7 +25,7 @@ def get_header(app):
                     ),
                 ],
                 className="twelve columns",
-                style={"padding-left": "0"},
+                style={"padding-left": "0", 'marginTop': 25}, # added top margin for space inside of header
             ),
         ],
         className="row",
@@ -64,30 +38,40 @@ def get_menu():
         [
             dcc.Link(
                 "Overview",
-                href="/dash-financial-report/overview",
+                href="/FinalProject/overview",
                 className="tab first",
             ),
             dcc.Link(
-                "Price Performance",
-                href="/dash-financial-report/price-performance",
+                "Centroid",
+                href="/FinalProject/price-performance",
                 className="tab",
             ),
             dcc.Link(
-                "Portfolio & Management",
-                href="/dash-financial-report/portfolio-management",
+                "Bolts",
+                href="/FinalProject/portfolio-management",
                 className="tab",
             ),
             dcc.Link(
-                "Fees & Minimums", href="/dash-financial-report/fees", className="tab"
+                "Gears", href="/FinalProject/fees", className="tab"
             ),
             dcc.Link(
-                "Distributions",
-                href="/dash-financial-report/distributions",
+                "Electronics",
+                href="/FinalProject/distributions",
                 className="tab",
             ),
             dcc.Link(
-                "News & Reviews",
-                href="/dash-financial-report/news-and-reviews",
+                "Materials",
+                href="/FinalProject/news-and-reviews",
+                className="tab",
+            ),
+            dcc.Link(
+                "Finance",
+                href="/FinalProject/news-and-reviews",
+                className="tab",
+            ),
+            dcc.Link(
+                "Probability",
+                href="/FinalProject/news-and-reviews",
                 className="tab",
             ),
         ],

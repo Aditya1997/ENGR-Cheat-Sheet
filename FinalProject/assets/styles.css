@@ -157,11 +157,11 @@ li {
   padding: 30px;
   margin-bottom: 25px;
   border-radius: 1px;
-  background: #98151b;
+  background: #1b4ea6;  /*98151b*/
   color: #ffffff;
 }
 .full-view-link {
-  background-color: rgb(152, 21, 27);
+  background-color: rgb(27, 78, 166); /*rgb(152, 21, 27)*/
   color: white !important;
   font-size: medium;
   padding: 15px 15px;
@@ -181,7 +181,7 @@ li {
   color: #3a3a3a;
   font-size: 40px !important;
   width: 80%;
-  border-left: 20px solid #98151b;
+  border-left: 20px solid #1b4ea6;/*98151b*/
   background: #ffffff;
   padding-left: 30px;
 }
@@ -192,7 +192,7 @@ li {
   left: 0;
   height: 20%;
   margin: 0mm;
-  border-left: 5px solid #98151b;
+  border-left: 5px solid #1b4ea6;/*98151b*/
   background: #ffffff;
   padding-top: 1px;
   padding-bottom: 1px;

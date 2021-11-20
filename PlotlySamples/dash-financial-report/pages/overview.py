@@ -15,7 +15,6 @@ DATA_PATH = PATH.joinpath("../data").resolve()
 df_fund_facts = pd.read_csv(DATA_PATH.joinpath("df_fund_facts.csv"))
 df_price_perf = pd.read_csv(DATA_PATH.joinpath("df_price_perf.csv"))
 
-
 def create_layout(app):
     # Page layouts
     return html.Div(
