@@ -6,7 +6,8 @@ from dash.dependencies import Input, Output, State
 import numpy as np
 from numpy import linalg
 import pandas as pd
-#import dash_design_kit as ddk
+
+from utils import make_dash_table
 from pages import (
     overview,
     centroid,
@@ -17,7 +18,6 @@ from pages import (
     finance,
     probability
 )
-#from callbacks import *
 
 app = dash.Dash(
     __name__, suppress_callback_exceptions=True, meta_tags=[{"name": "viewport", "content": "width=device-width"}], # We add suppress_callback_exceptions=True to avoid the callback exceptions for functions
@@ -238,12 +238,26 @@ def centroidshape(CS):
     Input('ImpUD', 'value'),
     Input('ImpThreads', 'value'),
 )
-def impres(D, T):
-    dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=7)
-    dfboltsimp.set_index('No. or Dia.', 'Number of Threads Per Inch')
-    impres = dfboltsimp[dfboltsimp[D,T]]
-    return impresult
 
+def impresult(D, T):
+    dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=7)
+    #dfx = dfboltsimp.set_index(['No. or Dia.', 'Number of Threads Per Inch']) # To set multindex
+    #x = dfx.loc[(D,T),:] # loc[(D,T),:] to returns values for everything in (D,T) index
+    impres = dfboltsimp.loc[((dfboltsimp['No. or Dia.'] == D) & (dfboltsimp['Number of Threads Per Inch'] == T)),:] # this method of using loc produces a dataframe using a boolean mask
+    #impres = dfboltsimp[((dfboltsimp['No. or Dia.']==D) & (dfboltsimp['Number of Threads Per Inch']==T))]
+    x = make_dash_table(impres)
+    return x
+
+@app.callback(
+    Output('metresult', 'children'),
+    Input('TapSize', 'value'),
+)
+
+def impresult(TapSize):
+    dfboltsmet = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingmetric.csv")
+    impres = dfboltsmet.loc[((dfboltsmet['Tap size'] == TapSize)),:] # this method of using loc produces a dataframe using a boolean mask
+    x = make_dash_table(impres)
+    return x
 
 if __name__ == "__main__":
     app.run_server(debug=True) #dev_tools_ui=False,dev_tools_props_check=False

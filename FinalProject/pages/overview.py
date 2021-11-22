@@ -8,7 +8,6 @@ import pandas as pd
 import plotly.graph_objs as go
 from utils import Header, make_dash_table
 import pathlib
-#import callbacks
 
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
