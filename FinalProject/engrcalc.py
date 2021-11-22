@@ -66,6 +66,25 @@ def display_page(pathname):
 
 ############################################################### Page 1 callbacks
 
+################################## VECTORS
+
+@app.callback(
+    Output('Magn1', 'children'),
+    Output('Magn2', 'children'),
+    Input('V1x', 'value'),
+    Input('V1y', 'value'),
+    Input('V1z', 'value'),
+    Input('V2x', 'value'),
+    Input('V2y', 'value'),
+    Input('V2z', 'value'),
+)
+def magnitudecalc(V1x, V1y, V1z, V2x, V2y, V2z):
+    V1 = np.array([V1x, V1y, V1z])
+    V2 = np.array([V2x, V2y, V2z])
+    M1 = np.linalg.norm(V1)
+    M2 = np.linalg.norm(V2)
+    return f'Magnitude Vector 1: {np.around(M1,5)}', f'Magnitude Vector 2: {np.around(M2,5)}'
+
 @app.callback(
     Output('dotprod', 'children'),
     Input('V1x', 'value'),
@@ -80,6 +99,25 @@ def dot_product(V1x, V1y, V1z, V2x, V2y, V2z):
     V2 = np.array([V2x, V2y, V2z])
     x = np.dot(V1,V2)
     return 'Dot Product: {}'.format(x)
+
+@app.callback(
+    Output('crossprod', 'children'),
+    Input('V1x', 'value'),
+    Input('V1y', 'value'),
+    Input('V1z', 'value'),
+    Input('V2x', 'value'),
+    Input('V2y', 'value'),
+    Input('V2z', 'value'),
+)
+def cross_product(V1x, V1y, V1z, V2x, V2y, V2z):
+    V1 = np.array([V1x, V1y, V1z])
+    V2 = np.array([V2x, V2y, V2z])
+    x = np.cross(V1,V2)
+    return 'Cross Product: {}'.format(x)
+
+
+################################## MATRICES
+
 
 @app.callback(
     Output('SMresult', 'children'),
