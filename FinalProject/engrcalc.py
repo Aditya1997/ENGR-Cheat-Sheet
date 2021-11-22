@@ -17,7 +17,7 @@ from pages import (
     finance,
     probability
 )
-from callbacks import *
+#from callbacks import *
 
 app = dash.Dash(
     __name__, suppress_callback_exceptions=True, meta_tags=[{"name": "viewport", "content": "width=device-width"}], # We add suppress_callback_exceptions=True to avoid the callback exceptions for functions
@@ -61,7 +61,10 @@ def display_page(pathname):
     else:
         return overview.create_layout(app)
 
-##################################### CALLBACKS for basic functions
+############################################################################################### CALLBACKS for basic functions
+
+
+############################################################### Page 1 callbacks
 
 @app.callback(
     Output('dotprod', 'children'),
@@ -80,55 +83,128 @@ def dot_product(V1x, V1y, V1z, V2x, V2y, V2z):
 
 @app.callback(
     Output('SMresult', 'children'),
-    Input('Matrix1', 'value'),
+    Input('Matrix 1', 'value'),
     Input('DropdownSM', 'value'),
+    #Input('M1Rows', 'value'),
+    #Input('M1Cols', 'value')
 )
-def SMoperation(M1, DSM):
-    a = np.matrix(M1)
+def SMoperation(M1, DSM):# M1R, M1C
+    #a = np.fromstring(M1, dtype=int, sep=' ').reshape(M1R, M1C)
+    a = np.array(np.mat(M1), subok=True) # required format ('1 2; 3 4')
+    places = 4
     if DSM == "inverse":
         try:
             ainv = np.linalg.inv(a)
-            return ainv
+            res = np.around(ainv,places).tolist()
+            return f'Inverse: {[str(x) for x in res]}'
         except:
             return "The matrix does not have an inverse"
-    if DSM == "transpose":
-        M1T = np.transpose(M1)
-        return M1T
-    if DSM == "determinant":
+    elif DSM == "transpose":
+        M1T = np.transpose(a)
+        res = np.around(M1T,places).tolist()
+        return f'Transpose: {[str(x) for x in res]}'
+    elif DSM == "determinant":
         try:
-            det = np.linalg.det(M1)
-            return det
+            det = np.linalg.det(a)
+            return f'Determinant ({places} places): {det:.4f}'
         except:
             return "The matrix does not have a determinant"
-        return det
 
 @app.callback(
     Output('DMresult', 'children'),
-    Input('Matrix2', 'value'),
-    Input('Matrix3', 'value'),
+    Input('Matrix 2', 'value'),
+    Input('Matrix 3', 'value'),
     Input('DropdownDM', 'value'),
+    #Input('M2Rows', 'value'),
+    #Input('M2Cols', 'value'),
+    #Input('M3Rows', 'value'),
+    #Input('M3Cols', 'value')
 )
-def DMoperation(M1, M2, DDM):
-    a = np.matrix(M1)
-    b = np.matrix(M2)
-    if DSM == "add":
+def DMoperation(M2, M3, DDM): #M2R, M2C,M3R, M3C
+    #a = np.fromstring(M2, dtype=int, sep=' ').reshape(M2R, M2C)
+    #b = np.fromstring(M3, dtype=int, sep=' ').reshape(M3R, M3C)
+    a = np.array(np.mat(M2), subok=True) # required format ('1 2; 3 4')
+    b = np.array(np.mat(M3), subok=True)
+    places = 4
+    if DDM == "add":
         try:
             add = a + b
-            return add
+            res = np.around(add,places).tolist()
+            return f'Addition Result: {[str(x) for x in res]}'
         except:
             return "The matrices cannot be added"
-    if DSM == "sub":
+    elif DDM == "sub":
         try:
             sub = a - b
-            return sub
+            res = np.around(sub,places).tolist()
+            return f'Subtraction Result: {[str(x) for x in res]}'
         except:
             return  "The matrices cannot be subtracted"
-    if DSM == "transpose":
+    elif DDM == "mult":
         try:
             mult = np.matmul(a,b)
-            return mult
+            res = np.around(mult,places).tolist()
+            return f'Multiplication Result: {[str(x) for x in res]}'
         except:
-            return  "The matrices cannot be multiplied"
+            return "The matrices cannot be multiplied"
+
+############################################################### Page 2 callbacks
+
+# @app.callback(
+#     Output('CShapeOpt', 'children'),
+#     Input('CShape', 'value'),
+# )
+# def centroidshape(CS):
+#     dimoptions = {
+#         'C': ['Radius'],
+#         'R': ['Length', 'Height'],
+#         'S': ['Side Length'],
+#         'I': ['Flange Width', 'Flange Thickness', 'Beam Height','Web Thickness'],
+#     }
+#     if CS == "C":
+#         return dimoptions["C"]
+#     elif CS == "R":
+#         return dimoptions["R"]
+#     elif CS == "S":
+#         return dimoptions["S"]
+#     elif CS == "I":
+#         return dimoptions["I"]
+#
+# x = centroidshape('C')
+# print(x)
+
+@app.callback(
+    [Output('CShapeOpt_{}'.format(x), 'children') for x in range(1,5)],
+    Input('CShape', 'value'),
+)
+def centroidshape(CS):
+    dimoptions = {
+        'C': ['Radius'],
+        'R': ['Length', 'Height'],
+        'S': ['Side Length'],
+        'I': ['Flange Width', 'Flange Thickness', 'Beam Height','Web Thickness'],
+    }
+    if CS == "C":
+        return dimoptions["C"]
+    elif CS == "R":
+        return dimoptions["R"]
+    elif CS == "S":
+        return dimoptions["S"]
+    elif CS == "I":
+        return dimoptions["I"]
+
+############################################################### Page 3 callbacks
+
+@app.callback(
+    Output('impresult', 'children'),
+    Input('ImpUD', 'value'),
+    Input('ImpThreads', 'value'),
+)
+def impres(D, T):
+    dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=7)
+    dfboltsimp.set_index('No. or Dia.', 'Number of Threads Per Inch')
+    impres = dfboltsimp[dfboltsimp[D,T]]
+    return impresult
 
 
 if __name__ == "__main__":

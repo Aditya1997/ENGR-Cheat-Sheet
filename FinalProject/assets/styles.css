@@ -92,10 +92,10 @@ td {
 }
 
 tr:nth-child(even) {
-  background-color: #f0f0f0;
+  background-color: #db7e21;/*f0f0f0*/
 }
 tr:nth-child(odd) {
-  background-color: #fafafa;
+  background-color: #424954; /*fafafa*/
 }
 
 table.reversed tr:nth-child(odd) {

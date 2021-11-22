@@ -83,21 +83,21 @@ def create_layout(app):
                     # Row 5, Solo Matrices
                     html.Div(
                         [
-                            html.Div(
-                                [
-                                    html.H6(
-                                        ["Matrices"], className="subtitle padded"
-                                    ),
+                            html.Div([html.H6(["Matrix"], className="subtitle padded"),
                                     #html.Table(make_dash_table(df_fund_facts)),
-                                    html.Div([html.H6("Single matrix operation: "),
-                                    dcc.Input(id='Matrix 1',placeholder='Enter in [1 2 3; 4 5 6; ...] format',type='text',value="[1 2;3 4]")]),
+                                    html.Div([html.H6("Single Matrix operation: "),
+                                    dcc.Input(id='Matrix 1',placeholder='Enter in 1 2; 3 4 format',type='text',value="1 2; 3 4"),
+                                    #dcc.Input(id='M1Rows',placeholder='Enter number of rows',type='number',value=2),
+                                    #dcc.Input(id='M1Cols',placeholder='Enter number of cols',type='number',value=2)]),
+                                    ],
+                                    className="row",
+                                    ),
                                 ],
-                                className="row",
                             ),
                             html.Div(
                                 [
-                                    html.Label('DropdownSM'),
-                                    dcc.Dropdown(
+                                    html.Label('What function do you want to perform?:'),
+                                    dcc.Dropdown(id = 'DropdownSM',
                                     options=[
                                         {'label': 'Inverse (^-1)', 'value': 'inverse'},
                                         {'label': 'Transpose (^T)', 'value': 'transpose'},
@@ -108,42 +108,45 @@ def create_layout(app):
                                 ]
                             ),
                             html.Br(),
-                            html.Div(id='SMresult', className="product"),
+                            html.Div(id='SMresult', className="product"),#'SMresult'
                             html.Br(),
                         ],
                         className="row ",
                     ),
-                    # Row 5, Dual Matrices
+                    # Row 6, Dual Matrices
                     html.Div(
                         [
                             html.Div(
                                 [
-                                    html.H6(
-                                        ["Matrices"], className="subtitle padded"
-                                    ),
+                                    html.H6(["Matrices"], className="subtitle padded"),
                                     #html.Table(make_dash_table(df_fund_facts)),
                                     html.Div([html.H6("Dual Matrix operation: "),
-                                    dcc.Input(id='Matrix 2',placeholder='Enter in [1 2 3; 4 5 6; ...] format',type='text',value="[1 2;3 4]"),
-                                    dcc.Input(id='Matrix 3',placeholder='Enter in [1 2 3; 4 5 6; ...] format',type='text',value="[1 2;3 4]")]),
+                                    dcc.Input(id='Matrix 2',placeholder='Enter in 1 2; 3 4 format',type='text',value="1 2; 3 4"),
+                                    #dcc.Input(id='M2Rows',placeholder='Enter number of rows',type='number',value=2),
+                                    #dcc.Input(id='M2Cols',placeholder='Enter number of cols',type='number',value=2),
+                                    dcc.Input(id='Matrix 3',placeholder='Enter in 1 2; 3 4 format',type='text',value="1 2; 3 4"),
+                                    #dcc.Input(id='M3Rows',placeholder='Enter number of rows',type='number',value=2),
+                                    #dcc.Input(id='M3Cols',placeholder='Enter number of cols',type='number',value=2)],
+                                    ],
+                                    ),
                                 ],
                                 className="row",
                             ),
                             html.Div(
                                 [
-                                    html.Label('DropdownDM'),
-                                    dcc.Dropdown(
+                                    html.Label('What function do you want to perform?:'),
+                                    dcc.Dropdown(id = 'DropdownDM',
                                     options=[
                                         {'label': 'Addition (+)', 'value': 'add'},
                                         {'label': 'Subtraction (-)', 'value': 'sub'},
-                                        {'label': 'Multiplication (x)', 'value': 'mul'},
-
+                                        {'label': 'Multiplication (x)', 'value': 'mult'},
                                     ],
                                 value = "add",
                                 className="row"),
                                 ]
                             ),
                             html.Br(),
-                            html.Div(id='DMresult', className="product"),
+                            html.Div(id = 'DMresult', className="product"), #DMresult
                             html.Br(),
                         ],
                         className="row ",

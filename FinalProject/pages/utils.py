@@ -99,6 +99,8 @@ def get_menu():
 def make_dash_table(df):
     """ Return a dash definition of an HTML table for a Pandas dataframe """
     table = []
+    html_row = [html.Td([col]) for col in df.columns] # adds headers
+    table = [html.Tr(html_row)]
     for index, row in df.iterrows():
         html_row = []
         for i in range(len(row)):

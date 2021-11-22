@@ -48,7 +48,7 @@ def get_menu():
             ),
             dcc.Link(
                 "Bolts",
-                href="/FinalProject/portfolio-management",
+                href="/FinalProject/bolts",
                 className="tab",
             ),
             dcc.Link(
@@ -83,6 +83,8 @@ def get_menu():
 def make_dash_table(df):
     """ Return a dash definition of an HTML table for a Pandas dataframe """
     table = []
+    html_row = [html.Td([col]) for col in df.columns] # adds headers
+    table.append(html.Tr(html_row))
     for index, row in df.iterrows():
         html_row = []
         for i in range(len(row)):
