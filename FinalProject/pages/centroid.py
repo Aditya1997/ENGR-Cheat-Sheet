@@ -4,6 +4,7 @@ import plotly.express as px
 from dash.dependencies import Input, Output, State
 import numpy as np
 import pandas as pd
+
 import plotly.graph_objs as go
 from utils import Header, make_dash_table
 import pathlib
@@ -16,7 +17,8 @@ dimoptions = {
     'C': ['Radius'],
     'R': ['Length', 'Height'],
     'S': ['Side Length'],
-    'I': ['Flange Width', 'Flange Thickness', 'Beam Height','Web Thickness'],
+    'I': ['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness'],
+
 }
 
 dimoptionsC = ['Radius']
@@ -25,7 +27,7 @@ dimoptionsR = ['Length', 'Height']
 
 dimoptionsS = ['Side Length']
 
-dimoptionsI= ['Flange Width', 'Flange Thickness', 'Beam Height','Web Thickness']
+dimoptionsI=['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness']
 
 def create_layout(app):
     return html.Div(
@@ -47,7 +49,6 @@ def create_layout(app):
                             ),
                             html.Div(
                                 [
-                                    html.Label('Centroid Shapes'),
                                     dcc.Dropdown(id = "CShape",
                                     options=[
                                         {'label': 'Circle', 'value': 'C'},
@@ -55,22 +56,33 @@ def create_layout(app):
                                         {'label': 'Square', 'value': 'S'},
                                         {'label': 'I-Beam', 'value': 'I'},
                                     ],
-                                value = 'I',
+                                value = 'C',
                                 className="row"),
                                 ]
                             ),
                             html.Div(
                                 [
                                     html.Label('Dimensions'),
-                                    (
-                                    dcc.Input(id = "input_{}".format(k), type = 'number', placeholder="{}".format(k)) for k in range(1,5)#[html.Div(id="CShapeOpt_{}".format(x)) for x in range(1,5)]
-                                    )
-                                ],
-                                className="row"
+                                ]),
+                            html.Div(
+                                [
+                                    html.Div(id='DimString'),
+                                ]),
+                            html.Div(
+                                    [dcc.Input(id = "D{}".format(k), type = 'number', placeholder="Dim {}".format(k),value=1) for k in range(1,7)],#range(1,7)
+                                    #for i in dcc.Store(id='DimParam'):
+                                    #    dcc.Input(id = f'D{i.index}', placeholder = i)
+                                    #[dcc.Input(id = "D{}".format(k), type = 'number', placeholder="Dim {}".format(k),value=1) for k in ]#
                             ),
                         ],
-                        className="row ",
+                        className="row"
                     ),
+                    html.Div(
+                        [
+                            html.Div(id='Centroid'),
+                            html.Div(id="Area")
+                        ],
+                    className = "row"),
                     # # Row 2
                     # html.Div(
                     #     [

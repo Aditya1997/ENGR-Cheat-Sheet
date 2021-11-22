@@ -6,6 +6,7 @@ from dash.dependencies import Input, Output, State
 import numpy as np
 from numpy import linalg
 import pandas as pd
+import math
 
 from utils import make_dash_table
 from pages import (
@@ -212,24 +213,58 @@ def DMoperation(M2, M3, DDM): #M2R, M2C,M3R, M3C
 # print(x)
 
 @app.callback(
-    [Output('CShapeOpt_{}'.format(x), 'children') for x in range(1,5)],
+    Output('Centroid', 'children'),
+    Output('Area', 'children'),
     Input('CShape', 'value'),
+    Input('D1', 'value'),
+    Input('D2', 'value'),
+    Input('D3', 'value'),
+    Input('D4', 'value'),
+    Input('D5', 'value'),
+    Input('D6', 'value'),
 )
-def centroidshape(CS):
+def centroidshape(CS, D1, D2, D3, D4, D5, D6):
     dimoptions = {
         'C': ['Radius'],
         'R': ['Length', 'Height'],
         'S': ['Side Length'],
-        'I': ['Flange Width', 'Flange Thickness', 'Beam Height','Web Thickness'],
+        'I': ['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness'],
     }
     if CS == "C":
-        return dimoptions["C"]
+        A = math.pi*D1**2
+        x = D1
+        y = D1
     elif CS == "R":
-        return dimoptions["R"]
+        A = D1*D2
+        x = D1/2
+        y = D2/2
     elif CS == "S":
-        return dimoptions["S"]
+        A = D1**2
+        x = D1/2
+        y = D1/2
     elif CS == "I":
-        return dimoptions["I"]
+        A = D1*D2+D5*D6+(D3-D2-D6)*D4
+        x = D1/2
+        num = (D1*D2*(D3-D2/2))+((D3-D2-D6)*D4)*(D3/2)+(D5*D6*(D6/2))
+        y = num/A
+    return  f"Centroid (bottom left is 0,0): {x}, {y}", f"Area: {A}"
+
+
+@app.callback(
+    Output('DimString', 'children'),
+    Input('CShape', 'value'),
+)
+def dimlistdetails(CS):
+    dimoptions = {
+        'C': ['Radius'],
+        'R': ['Length', 'Height'],
+        'S': ['Side Length'],
+        'I': ['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness'],
+    }
+    dimlist = dimoptions[CS]
+    finaldimlist = [f'Dim {dimlist.index(k)+1} = {k}' for k in dimlist]
+    finaldimstring = ", ".join(finaldimlist)
+    return finaldimstring
 
 ############################################################### Page 3 callbacks
 
