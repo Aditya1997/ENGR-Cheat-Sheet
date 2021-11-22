@@ -13,21 +13,7 @@ import pathlib
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../data").resolve()
 
-dimoptions = {
-    'C': ['Radius'],
-    'R': ['Length', 'Height'],
-    'S': ['Side Length'],
-    'I': ['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness'],
 
-}
-
-dimoptionsC = ['Radius']
-
-dimoptionsR = ['Length', 'Height']
-
-dimoptionsS = ['Side Length']
-
-dimoptionsI=['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness']
 
 def create_layout(app):
     return html.Div(
@@ -36,7 +22,7 @@ def create_layout(app):
             # page 2
             html.Div(
                 [
-                    # Row
+                    # row 1 (inputs)
                     html.Div(
                         [
                             html.Div(
@@ -55,7 +41,7 @@ def create_layout(app):
                                         {'label': 'Rectangle', 'value': 'R'},
                                         {'label': 'Square', 'value': 'S'},
                                         {'label': 'I-Beam', 'value': 'I'},
-                                    ],
+                                        ],
                                 value = 'C',
                                 className="row"),
                                 ]
@@ -63,11 +49,9 @@ def create_layout(app):
                             html.Div(
                                 [
                                     html.Label('Dimensions'),
-                                ]),
-                            html.Div(
-                                [
                                     html.Div(id='DimString'),
-                                ]),
+                                ],
+                            ),
                             html.Div(
                                     [dcc.Input(id = "D{}".format(k), type = 'number', placeholder="Dim {}".format(k),value=1) for k in range(1,7)],#range(1,7)
                                     #for i in dcc.Store(id='DimParam'):
@@ -77,12 +61,13 @@ def create_layout(app):
                         ],
                         className="row"
                     ),
+                    # row 2 (outputs)
                     html.Div(
                         [
                             html.Div(id='Centroid'),
                             html.Div(id="Area")
                         ],
-                    className = "row"),
+                    className = "product"),
                     # # Row 2
                     # html.Div(
                     #     [

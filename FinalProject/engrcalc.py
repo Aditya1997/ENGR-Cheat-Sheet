@@ -65,7 +65,7 @@ def display_page(pathname):
 ############################################################################################### CALLBACKS for basic functions
 
 
-############################################################### Page 1 callbacks
+############################################################### Page 1 callbacks (matrices and vectors)
 
 ################################## VECTORS
 
@@ -187,30 +187,7 @@ def DMoperation(M2, M3, DDM): #M2R, M2C,M3R, M3C
         except:
             return "The matrices cannot be multiplied"
 
-############################################################### Page 2 callbacks
-
-# @app.callback(
-#     Output('CShapeOpt', 'children'),
-#     Input('CShape', 'value'),
-# )
-# def centroidshape(CS):
-#     dimoptions = {
-#         'C': ['Radius'],
-#         'R': ['Length', 'Height'],
-#         'S': ['Side Length'],
-#         'I': ['Flange Width', 'Flange Thickness', 'Beam Height','Web Thickness'],
-#     }
-#     if CS == "C":
-#         return dimoptions["C"]
-#     elif CS == "R":
-#         return dimoptions["R"]
-#     elif CS == "S":
-#         return dimoptions["S"]
-#     elif CS == "I":
-#         return dimoptions["I"]
-#
-# x = centroidshape('C')
-# print(x)
+############################################################### Page 2 callbacks (centroid)
 
 @app.callback(
     Output('Centroid', 'children'),
@@ -266,14 +243,13 @@ def dimlistdetails(CS):
     finaldimstring = ", ".join(finaldimlist)
     return finaldimstring
 
-############################################################### Page 3 callbacks
+############################################################### Page 3 callbacks (bolts)
 
 @app.callback(
     Output('impresult', 'children'),
     Input('ImpUD', 'value'),
     Input('ImpThreads', 'value'),
 )
-
 def impresult(D, T):
     dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=7)
     #dfx = dfboltsimp.set_index(['No. or Dia.', 'Number of Threads Per Inch']) # To set multindex
@@ -287,12 +263,14 @@ def impresult(D, T):
     Output('metresult', 'children'),
     Input('TapSize', 'value'),
 )
-
 def impresult(TapSize):
     dfboltsmet = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingmetric.csv")
     impres = dfboltsmet.loc[((dfboltsmet['Tap size'] == TapSize)),:] # this method of using loc produces a dataframe using a boolean mask
     x = make_dash_table(impres)
     return x
+
+############################################################### Page 3 callbacks (gears)
+
 
 if __name__ == "__main__":
     app.run_server(debug=True) #dev_tools_ui=False,dev_tools_props_check=False

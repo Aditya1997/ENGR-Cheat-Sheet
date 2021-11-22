@@ -33,8 +33,8 @@ def create_layout(app):
                                     html.Br([]), # This adds a line break
                                     html.Table(make_dash_table(dfboltsimp))],
                                     ),
-                                ],
-                                className="product",
+                        ],
+                        className="product",
                     ),
                     # Imperial lookup
                     html.Div(
@@ -70,7 +70,7 @@ def create_layout(app):
                     html.Div(
                         [
                             html.Div(
-                                [html.Div(id='impresult', className="product")
+                                [html.Div(id='impresult', style={"font-size": "12px"}, className="product")
                                 ],
                                 className="row",
                                 style={"margin-bottom": "20px"})
@@ -106,10 +106,11 @@ def create_layout(app):
                     html.Div(
                         [
                             html.Div(
-                                [html.Div(id='metresult', className="product")
+                                [
+                                html.Div(id='metresult', style={"font-size": "12px"}, className="product")
                                 ],
                                 className="row",
-                                style={"margin-bottom": "20px"},
+                                style={"margin-bottom": "20px"}
                             )
                         ]
                     ),

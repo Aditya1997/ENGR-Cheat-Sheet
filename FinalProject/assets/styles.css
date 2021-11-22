@@ -159,6 +159,7 @@ li {
   border-radius: 1px;
   background: #1b4ea6;  /*98151b*/
   color: #ffffff;
+  font-size: 16px;
 }
 .full-view-link {
   background-color: rgb(27, 78, 166); /*rgb(152, 21, 27)*/
