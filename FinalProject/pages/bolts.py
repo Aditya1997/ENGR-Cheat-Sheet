@@ -13,7 +13,7 @@ import pathlib
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../data").resolve()
 
-dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=7)
+dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=8)
 dfboltsmet = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingmetric.csv")
 
 def create_layout(app):
@@ -45,20 +45,15 @@ def create_layout(app):
                                 options=[{'label': i, 'value': str(i)} for i in pd.unique(dfboltsimp['No. or Dia.'].values.ravel('K'))],
                                 value = '1',
                                 className="five columns"),
-                                # html.Label('Threads per Inch'),
-                                # dcc.Dropdown(id = "ImpThreads",
-                                # options=[{'label': i, 'value': i} for i in pd.unique(dfboltsimp['Number of Threads Per Inch'].values.ravel('K'))],
-                                # value = "56",
-                                # className="five columns"),
                                 ],
                                 className="row",
                                 style={"margin-bottom": "20px"},
                             ),
                             html.Div(
                                 [html.Label('Threads per Inch'),
-                                dcc.Dropdown(id = "ImpThreads",
-                                options=[{'label': i, 'value': i} for i in pd.unique(dfboltsimp['Number of Threads Per Inch'].values.ravel('K'))],
-                                value = 72,
+                                dcc.Dropdown(id = "ImpThreadOptions",
+                                #options=[{'label': i, 'value': i} for i in pd.unique(dfboltsimp['Number of Threads Per Inch'].values.ravel('K'))],
+                                #value = 72,
                                 className="five columns"),
                                 ],
                                 className="row",

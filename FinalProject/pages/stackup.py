@@ -13,9 +13,6 @@ import pathlib
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../data").resolve()
 
-df_fund_facts = pd.read_csv(DATA_PATH.joinpath("df_fund_facts.csv"))
-df_price_perf = pd.read_csv(DATA_PATH.joinpath("df_price_perf.csv"))
-
 
 def create_layout(app):
     # Page layouts
@@ -25,40 +22,12 @@ def create_layout(app):
             # page 1
             html.Div(
                 [
-                    # Row 3
-                    html.Div(
-                        [
-                            html.Div(
-                                [
-                                    html.H5("Engineering Calculators"),
-                                    html.Br([]), # This adds a line break
-                                    html.P(
-                                        "\
-                                    This webpage contains several engineering calculators for various \
-                                    functions, including bolts, materials, and probabilities. This  \
-                                    web app was developed using Plotly Dash, pandas, and numpy.",
-                                        style={"color": "#ffffff"},
-                                        className="row",
-                                    ),
-                                ],
-                                className="product",
-                            )
-                        ],
-                        className="row",
-                    ),
                     # Row 4, Vectors
                     html.Div(
                         [
-                            html.Div(
+                            html.Div( #[html.Div([dcc.Input, dcc.Dropdown])] for i in range(0,10)
                                 [
-                                    html.H6(
-                                        ["Vectors"], className="subtitle padded"
-                                    ),
-                                    #html.Table(make_dash_table(df_fund_facts)),
-                                    html.Div([html.H6("Vector 1: "),
-                                    dcc.Input(id='V1x',placeholder='Enter a value...',type='number',value=1),
-                                    dcc.Input(id='V1y',placeholder='Enter a value...',type='number',value=2),
-                                    dcc.Input(id='V1z',placeholder='Enter a value...',type='number',value=3)]),
+                                    [html.Div([dcc.Input(id = f'VV{i})', placeholder = "P", type = "text", value = "1")]) for i in range(0,10)]
                                 ],
                                 className="row",
                             ),

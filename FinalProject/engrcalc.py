@@ -13,6 +13,7 @@ from pages import (
     overview,
     centroid,
     bolts, # pandas df
+    stackup,
     gears,
     electronics, # resistor code df?
     materials, # pandas df
@@ -34,10 +35,12 @@ app.layout = html.Div(
 # Update page
 @app.callback(Output("page-content", "children"), [Input("url", "pathname")])
 def display_page(pathname):
-    if pathname == "/FinalProject/price-performance": # centroid, this link must correspond to href in header in utils.py
+    if pathname == "/FinalProject/centroid": # this link must correspond to href in header in utils.py
         return centroid.create_layout(app)
     elif pathname == "/FinalProject/bolts":
         return bolts.create_layout(app)
+    elif pathname == "/FinalProject/stackup":
+        return stackup.create_layout(app)
     elif pathname == "/FinalProject/gears":
         return gears.create_layout(app)
     elif pathname == "/FinalProject/electronics":
@@ -52,6 +55,7 @@ def display_page(pathname):
         return (
             overview.create_layout(app),
             centroid.create_layout(app),
+            stackup.create_layout(app),
             bolts.create_layout(app),
             gears.create_layout(app),
             electronics.create_layout(app),
@@ -114,7 +118,7 @@ def cross_product(V1x, V1y, V1z, V2x, V2y, V2z):
     V1 = np.array([V1x, V1y, V1z])
     V2 = np.array([V2x, V2y, V2z])
     x = np.cross(V1,V2)
-    return 'Cross Product: {}'.format(x)
+    return f'Cross Product: {x}'
 
 
 ################################## MATRICES
@@ -124,11 +128,8 @@ def cross_product(V1x, V1y, V1z, V2x, V2y, V2z):
     Output('SMresult', 'children'),
     Input('Matrix 1', 'value'),
     Input('DropdownSM', 'value'),
-    #Input('M1Rows', 'value'),
-    #Input('M1Cols', 'value')
 )
-def SMoperation(M1, DSM):# M1R, M1C
-    #a = np.fromstring(M1, dtype=int, sep=' ').reshape(M1R, M1C)
+def SMoperation(M1, DSM):
     a = np.array(np.mat(M1), subok=True) # required format ('1 2; 3 4')
     places = 4
     if DSM == "inverse":
@@ -154,14 +155,8 @@ def SMoperation(M1, DSM):# M1R, M1C
     Input('Matrix 2', 'value'),
     Input('Matrix 3', 'value'),
     Input('DropdownDM', 'value'),
-    #Input('M2Rows', 'value'),
-    #Input('M2Cols', 'value'),
-    #Input('M3Rows', 'value'),
-    #Input('M3Cols', 'value')
 )
-def DMoperation(M2, M3, DDM): #M2R, M2C,M3R, M3C
-    #a = np.fromstring(M2, dtype=int, sep=' ').reshape(M2R, M2C)
-    #b = np.fromstring(M3, dtype=int, sep=' ').reshape(M3R, M3C)
+def DMoperation(M2, M3, DDM):
     a = np.array(np.mat(M2), subok=True) # required format ('1 2; 3 4')
     b = np.array(np.mat(M3), subok=True)
     places = 4
@@ -245,13 +240,66 @@ def dimlistdetails(CS):
 
 ############################################################### Page 3 callbacks (bolts)
 
+impboltstpi = {
+    '#0': ['80'],
+    '#1': ['64','72'],
+    '#2': ['56','64'],
+    '#3': ['48','56'],
+    '#4': ['40','48'],
+    '#5': ['40','44'],
+    '#6': ['32','40'],
+    '#8': ['32','36'],
+    '#10': ['24','32'],
+    '#12': ['24','28','32'],
+    '1/4': ['20','28','32'],
+    '5/16': ['18','24','32'],
+    '3/8': ['16','24','32'],
+    '7/16': ['14','20','28'],
+    '1/2': ['13','20','28'],
+    '9/16': ['12','18','24'],
+    '5/8': ['11','18','24'],
+    '11/16': ['24'],
+    '3/4': ['13','20','28'],
+    '13/16': ['20'],
+    '7/8': ['9','14','20'],
+    '15/16': ['20'],
+    '1': ['8','12','20'],
+    '1-1/16': ['8'],
+    '1-1/8': ['7','12','18'],
+    '1-3/16': ['18'],
+    '1-1/4': ['7','12','18'],
+    '1-5/16': ['18'],
+    '1-3/8': ['6','12','18'],
+    '1-7/16': ['18'],
+    '1-1/2': ['6','12','18'],
+    '1-9/16': ['18'],
+    '1-5/8': ['18'],
+    '1-11/16': ['18'],
+    '1-3/4': ['5'],
+}
+
+dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=8)
+
+# Chained callback starts
+@app.callback(
+    Output('ImpThreadOptions', 'options'), #output is of type options, NOT children
+    Input('ImpUD', 'value'))
+def set_thread_options(selected_size):
+    return [{'label': i, 'value': int(i)} for i in impboltstpi[selected_size]] # drop down only allows real size + thread combinations
+
+@app.callback(
+    Output('ImpThreadOptions', 'value'),
+    Input('ImpThreadOptions', 'options'))
+def set_thread_value(available_options):
+    return available_options[0]['value'] # sets starting value to always be first in list of thread options, collects 'value' term of first dictionary in list
+# Chained callback ends
+
 @app.callback(
     Output('impresult', 'children'),
     Input('ImpUD', 'value'),
-    Input('ImpThreads', 'value'),
+    Input('ImpThreadOptions', 'value'),
 )
 def impresult(D, T):
-    dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=7)
     #dfx = dfboltsimp.set_index(['No. or Dia.', 'Number of Threads Per Inch']) # To set multindex
     #x = dfx.loc[(D,T),:] # loc[(D,T),:] to returns values for everything in (D,T) index
     impres = dfboltsimp.loc[((dfboltsimp['No. or Dia.'] == D) & (dfboltsimp['Number of Threads Per Inch'] == T)),:] # this method of using loc produces a dataframe using a boolean mask

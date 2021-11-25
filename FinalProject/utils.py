@@ -43,7 +43,7 @@ def get_menu():
             ),
             dcc.Link(
                 "Centroid",
-                href="/FinalProject/price-performance",
+                href="/FinalProject/centroid",
                 className="tab",
             ),
             dcc.Link(
@@ -52,25 +52,30 @@ def get_menu():
                 className="tab",
             ),
             dcc.Link(
-                "Gears", href="/FinalProject/fees", className="tab"
+                "Stackup/Tolerance",
+                href="/FinalProject/stackup",
+                className="tab",
             ),
             dcc.Link(
-                "Electronics",
+                "Gears WIP", href="/FinalProject/fees", className="tab"
+            ),
+            dcc.Link(
+                "Electronics WIP",
                 href="/FinalProject/distributions",
                 className="tab",
             ),
             dcc.Link(
-                "Materials",
+                "Materials WIP",
                 href="/FinalProject/news-and-reviews",
                 className="tab",
             ),
             dcc.Link(
-                "Finance",
+                "Finance WIP",
                 href="/FinalProject/news-and-reviews",
                 className="tab",
             ),
             dcc.Link(
-                "Probability",
+                "Probability WIP",
                 href="/FinalProject/news-and-reviews",
                 className="tab",
             ),
