@@ -184,6 +184,13 @@ def DMoperation(M2, M3, DDM):
 
 ############################################################### Page 2 callbacks (centroid)
 
+dimoptions = {
+    'C': ['Radius'],
+    'R': ['Length', 'Height'],
+    'S': ['Side Length'],
+    'I': ['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness'],
+}
+
 @app.callback(
     Output('Centroid', 'children'),
     Output('Area', 'children'),
@@ -196,12 +203,6 @@ def DMoperation(M2, M3, DDM):
     Input('D6', 'value'),
 )
 def centroidshape(CS, D1, D2, D3, D4, D5, D6):
-    dimoptions = {
-        'C': ['Radius'],
-        'R': ['Length', 'Height'],
-        'S': ['Side Length'],
-        'I': ['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness'],
-    }
     if CS == "C":
         A = math.pi*D1**2
         x = D1
@@ -227,12 +228,6 @@ def centroidshape(CS, D1, D2, D3, D4, D5, D6):
     Input('CShape', 'value'),
 )
 def dimlistdetails(CS):
-    dimoptions = {
-        'C': ['Radius'],
-        'R': ['Length', 'Height'],
-        'S': ['Side Length'],
-        'I': ['Top Flange Width', 'Top Flange Thickness', 'Beam Height','Web Thickness','Bottom Flange Width', 'Bottom Flange Thickness'],
-    }
     dimlist = dimoptions[CS]
     finaldimlist = [f'Dim {dimlist.index(k)+1} = {k}' for k in dimlist]
     finaldimstring = ", ".join(finaldimlist)
@@ -278,20 +273,21 @@ impboltstpi = {
     '1-3/4': ['5'],
 }
 
-dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=8)
+dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=8, dtype={2:'object'}) # reads type of column 2 (third col) as string instead of float
+dfboltsmet = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingmetric.csv")
 
 # Chained callback starts
 @app.callback(
     Output('ImpThreadOptions', 'options'), #output is of type options, NOT children
     Input('ImpUD', 'value'))
 def set_thread_options(selected_size):
-    return [{'label': i, 'value': int(i)} for i in impboltstpi[selected_size]] # drop down only allows real size + thread combinations
+    return [{'label': i, 'value': i} for i in impboltstpi[selected_size]] # drop down only allows real size + thread combinations
 
 @app.callback(
     Output('ImpThreadOptions', 'value'),
     Input('ImpThreadOptions', 'options'))
 def set_thread_value(available_options):
-    return available_options[0]['value'] # sets starting value to always be first in list of thread options, collects 'value' term of first dictionary in list
+    return available_options[0]['value'] # sets starting value to always be first in list of thread options, collects value of the 'value' key of first dictionary in list
 # Chained callback ends
 
 @app.callback(
@@ -299,11 +295,11 @@ def set_thread_value(available_options):
     Input('ImpUD', 'value'),
     Input('ImpThreadOptions', 'value'),
 )
-def impresult(D, T):
+def impresult(D,T):
     #dfx = dfboltsimp.set_index(['No. or Dia.', 'Number of Threads Per Inch']) # To set multindex
-    #x = dfx.loc[(D,T),:] # loc[(D,T),:] to returns values for everything in (D,T) index
+    #x = dfx.loc[(D,T),:] # loc[(D,T),:] to return values for all columns in the (D,T) multindex
     impres = dfboltsimp.loc[((dfboltsimp['No. or Dia.'] == D) & (dfboltsimp['Number of Threads Per Inch'] == T)),:] # this method of using loc produces a dataframe using a boolean mask
-    #impres = dfboltsimp[((dfboltsimp['No. or Dia.']==D) & (dfboltsimp['Number of Threads Per Inch']==T))]
+    #impres = dfboltsimp[((dfboltsimp['No. or Dia.']==D) & (dfboltsimp['Number of Threads Per Inch']==T))] # this method uses & to create a merged mask
     x = make_dash_table(impres)
     return x
 
@@ -312,7 +308,6 @@ def impresult(D, T):
     Input('TapSize', 'value'),
 )
 def impresult(TapSize):
-    dfboltsmet = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingmetric.csv")
     impres = dfboltsmet.loc[((dfboltsmet['Tap size'] == TapSize)),:] # this method of using loc produces a dataframe using a boolean mask
     x = make_dash_table(impres)
     return x

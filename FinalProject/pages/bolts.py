@@ -13,7 +13,7 @@ import pathlib
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../data").resolve()
 
-dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=8)
+dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=8, dtype={2:'object'})
 dfboltsmet = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingmetric.csv")
 
 def create_layout(app):
@@ -51,9 +51,7 @@ def create_layout(app):
                             ),
                             html.Div(
                                 [html.Label('Threads per Inch'),
-                                dcc.Dropdown(id = "ImpThreadOptions",
-                                #options=[{'label': i, 'value': i} for i in pd.unique(dfboltsimp['Number of Threads Per Inch'].values.ravel('K'))],
-                                #value = 72,
+                                dcc.Dropdown(id = "ImpThreadOptions", # generated via chained callback
                                 className="five columns"),
                                 ],
                                 className="row",
