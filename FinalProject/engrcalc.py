@@ -312,7 +312,42 @@ def impresult(TapSize):
     x = make_dash_table(impres)
     return x
 
-############################################################### Page 3 callbacks (gears)
+############################################################### Page 4 callbacks (stackup)
+
+@app.callback(
+    Output('nomGap', 'children'),
+    Output('minGap', 'children'),
+    Output('maxGap', 'children'),
+    [Input(f'S{i}', 'value') for i in range(0,10)],
+    [Input(f'D{j}', 'value') for j in range(0,10)],
+    [Input(f'tolS{k}', 'value') for k in range(0,10)],
+    [Input(f'tolD{l}', 'value') for l in range(0,10)],
+)
+def tolerance(S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,D1,D2,D3,D4,D5,D6,D7,D8,D9,D10,
+tolS1, tolS2, tolS3, tolS4, tolS5, tolS6, tolS7, tolS8, tolS9, tolS10,
+tolD1, tolD2, tolD3, tolD4, tolD5, tolD6, tolD7, tolD8, tolD9, tolD10):
+
+    Slist = [S1,S2,S3,S4,S5,S6,S7,S8,S9,S10]
+    Dlist = [D1,D2,D3,D4,D5,D6,D7,D8,D9,D10]
+    tolSlist = [tolS1, tolS2, tolS3, tolS4, tolS5, tolS6, tolS7, tolS8, tolS9, tolS10]
+    tolDlist = [tolD1, tolD2, tolD3, tolD4, tolD5, tolD6, tolD7, tolD8, tolD9, tolD10]
+    zipSignDim = list(zip(Slist, Dlist))
+    #zipSignDim = [x for x in zipSignDim if x != ("","")] #list comp filter to remove non-viable inputs prior to float function
+    dimlist = [float(x[0]+x[1]) for x in zipSignDim if x != ("","")]
+    print(dimlist)
+    zipSignTol = list(zip(Slist, tolSlist, tolDlist))
+    #zipSignTol = [y for y in zipSignDim if y != ("","","")] #list comp filter to remove non-viable inputs prior to float function
+    minlist= []
+    maxlist = []
+    [minlist.append(-float(y[2])) for y in zipSignTol if ((y[0]=="+" and "-" in y[1]) or (y[0]=="-" and "+" in y[1]))]
+    [maxlist.append(float(y[2])) for y in zipSignTol if ((y[0]=="-" and "-" in y[1]) or (y[0]=="+" and "+" in y[1]))]
+    nomGap = sum(dimlist)
+    nomgapres = f'Nominal Gap: {nomGap}'
+    minGap = nomGap + sum(minlist)
+    mingapres = f'Minimum Gap: {minGap}'
+    maxGap = nomGap + sum(maxlist)
+    maxgapres = f'Maximum Gap: {maxGap}'
+    return nomgapres, mingapres, maxgapres
 
 
 if __name__ == "__main__":
