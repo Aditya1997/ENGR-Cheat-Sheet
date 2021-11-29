@@ -349,6 +349,9 @@ tolD1, tolD2, tolD3, tolD4, tolD5, tolD6, tolD7, tolD8, tolD9, tolD10):
     maxgapres = f'Maximum Gap: {maxGap}'
     return nomgapres, mingapres, maxgapres
 
+############################################################### Page 5 callbacks (gears)
+
+
 
 if __name__ == "__main__":
     app.run_server(debug=True) #dev_tools_ui=False,dev_tools_props_check=False
