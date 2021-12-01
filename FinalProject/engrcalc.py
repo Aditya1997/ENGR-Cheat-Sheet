@@ -254,7 +254,7 @@ impboltstpi = {
     '9/16': ['12','18','24'],
     '5/8': ['11','18','24'],
     '11/16': ['24'],
-    '3/4': ['13','20','28'],
+    '3/4': ['10','16','20'],
     '13/16': ['20'],
     '7/8': ['9','14','20'],
     '15/16': ['20'],
@@ -334,7 +334,6 @@ tolD1, tolD2, tolD3, tolD4, tolD5, tolD6, tolD7, tolD8, tolD9, tolD10):
     zipSignDim = list(zip(Slist, Dlist))
     #zipSignDim = [x for x in zipSignDim if x != ("","")] #list comp filter to remove non-viable inputs prior to float function
     dimlist = [float(x[0]+x[1]) for x in zipSignDim if x != ("","")]
-    print(dimlist)
     zipSignTol = list(zip(Slist, tolSlist, tolDlist))
     #zipSignTol = [y for y in zipSignDim if y != ("","","")] #list comp filter to remove non-viable inputs prior to float function
     minlist= []
@@ -354,4 +353,5 @@ tolD1, tolD2, tolD3, tolD4, tolD5, tolD6, tolD7, tolD8, tolD9, tolD10):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True) #dev_tools_ui=False,dev_tools_props_check=False
+    #app.run_server(debug=True) #dev_tools_ui=False (hides dev UI in bottom right), dev_tools_props_check=False (disables property check)
+    app.run_server(debug=True, dev_tools_ui=False)
