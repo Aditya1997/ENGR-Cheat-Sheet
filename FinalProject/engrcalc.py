@@ -15,8 +15,8 @@ from pages import (
     bolts, # pandas df
     stackup,
     gears,
-    electronics, # resistor code df?
-    materials, # pandas df
+    electronics, # resistor color code using pandas df?
+    materials, # materials properties using pandas df?
     finance,
     probability
 )
