@@ -64,7 +64,7 @@ def display_page(pathname):
             probability.create_layout(app)
         )
     else:
-        return overview.create_layout(app)
+        return overview.create_layout(app) # if the path is not listed here, defaults to overview/front page
 
 ############################################################################################### CALLBACKS for basic functions
 
