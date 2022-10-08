@@ -355,7 +355,13 @@ tolD1, tolD2, tolD3, tolD4, tolD5, tolD6, tolD7, tolD8, tolD9, tolD10):
 
 ############################################################### Page 5 callbacks (gears)
 
+############################################################### Page 6 callbacks (electronics)
 
+############################################################### Page 7 callbacks (materials)
+
+############################################################### Page 8 callbacks (finance)
+
+############################################################### Page 9 callbacks (probability)
 
 if __name__ == "__main__":
     #app.run_server(debug=True) #dev_tools_ui=False (hides dev UI in bottom right), dev_tools_props_check=False (disables property check)
