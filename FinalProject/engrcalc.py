@@ -1,7 +1,7 @@
 # Setup
 # cmd run as admin
 # python -m pip install -–upgrade pip
-# pip install pandas pip install numpy
+# pip install pandas pip install numpy pip install dash
 
 # -*- coding: utf-8 -*-
 import dash
