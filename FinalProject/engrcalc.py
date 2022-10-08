@@ -1,4 +1,7 @@
 # Setup
+# download Python, Atom, desired Atom packages
+# Add environment variable titled "Path" for Python
+# Example: C:\Users\XXX\AppData\Local\Programs\Python\Python310
 # cmd run as admin
 # python -m pip install -–upgrade pip
 # pip install pandas pip install numpy pip install dash
