@@ -12,8 +12,11 @@ import pathlib
 # get relative data folder
 PATH = pathlib.Path(__file__).parent
 DATA_PATH = PATH.joinpath("../data").resolve()
-
+#References
+#Imperial: https://mae.ufl.edu/designlab/Lab%20Assignments/EML2322L%20Tap%20Drill%20Chart.pdf, https://littlemachineshop.com/images/gallery/PDF/tapdrillsizes.pdf
+#Metric: https://www.carbidedepot.com/formulas-tap-metric.htm
 dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingimp.csv", skiprows=8, dtype={2:'object'})
+#dfboltsimp = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\DONOTTOUCH\boltsizingimp.csv", skiprows=8, dtype={2:'object'})
 dfboltsmet = pd.read_csv(r"C:\Users\adity\Documents\GitHub\ENGR-Cheat-Sheet\FinalProject\data\boltsizingmetric.csv")
 
 def create_layout(app):

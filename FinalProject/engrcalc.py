@@ -49,8 +49,10 @@ def display_page(pathname):
         return bolts.create_layout(app)
     elif pathname == "/FinalProject/stackup":
         return stackup.create_layout(app)
-    elif pathname == "/FinalProject/gears":
-        return gears.create_layout(app)
+    #elif pathname == "/FinalProject/gears":
+        #return gears.create_layout(app)
+    elif pathname == "/FinalProject/newsReviews":
+        return centroid.create_layout(app)
     elif pathname == "/FinalProject/electronics":
         return electronics.create_layout(app)
     elif pathname == "/FinalProject/materials":
@@ -77,7 +79,7 @@ def display_page(pathname):
 ############################################################################################### CALLBACKS for basic functions
 
 
-############################################################### Page 1 callbacks (matrices and vectors)
+############################################################### Page 1 callbacks (arrays, matrices and vectors)
 
 ################################## VECTORS
 

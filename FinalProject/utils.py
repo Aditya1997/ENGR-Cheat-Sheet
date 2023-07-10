@@ -37,8 +37,8 @@ def get_menu():
     menu = html.Div(
         [
             dcc.Link(
-                "Overview",
-                href="/FinalProject/overview",
+                "Overview/Arrays",
+                href="/FinalProject/overview", # href must correspond to pathnames in engrcalc.py
                 className="tab first",
             ),
             dcc.Link(
@@ -57,7 +57,9 @@ def get_menu():
                 className="tab",
             ),
             dcc.Link(
-                "Gears WIP", href="/FinalProject/fees", className="tab"
+                "Gears WIP",
+                href="/FinalProject/newsReviews",
+                className="tab"
             ),
             dcc.Link(
                 "Electronics WIP",
@@ -66,17 +68,17 @@ def get_menu():
             ),
             dcc.Link(
                 "Materials WIP",
-                href="/FinalProject/news-and-reviews",
+                href="/FinalProject/feesMins",
                 className="tab",
             ),
             dcc.Link(
                 "Finance WIP",
-                href="/FinalProject/news-and-reviews",
+                href="/FinalProject/portfolioManagement",
                 className="tab",
             ),
             dcc.Link(
                 "Probability WIP",
-                href="/FinalProject/news-and-reviews",
+                href="/FinalProject/pricePerformance",
                 className="tab",
             ),
         ],
